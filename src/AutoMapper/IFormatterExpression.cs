@@ -32,6 +32,10 @@ namespace AutoMapper
         IMappingExpression<TSource, TDestination> CreateMap<TSource, TDestination>(MemberList source);
         IMappingExpression CreateMap(Type sourceType, Type destinationType);
         IMappingExpression CreateMap(Type sourceType, Type destinationType, MemberList source);
+		IMappingExpression<TSource, TDestination> CreatePartialMap<TSource, TDestination>(MemberList source = MemberList.Destination);
+		IMappingExpression CreatePartialMap(Type sourceType, Type destinationType, MemberList source = MemberList.Destination);
+		IMappingExpression<TSource, TDestination> CreatePartialMap<TSource, TDestination>(string profileName, MemberList source = MemberList.Destination);
+		IMappingExpression CreatePartialMap(Type sourceType, Type destinationType, string profileName, MemberList source = MemberList.Destination);
 		void RecognizePrefixes(params string[] prefixes);
 		void RecognizePostfixes(params string[] postfixes);
 		void RecognizeAlias(string original, string alias);

@@ -134,6 +134,26 @@ namespace AutoMapper
 			return map;
 		}
 
+		public IMappingExpression<TSource, TDestination> CreatePartialMap<TSource, TDestination>(MemberList memberList = MemberList.Destination)
+		{
+			return _configurator.CreatePartialMap<TSource, TDestination>(ProfileName, memberList);
+		}
+
+		public IMappingExpression<TSource, TDestination> CreatePartialMap<TSource, TDestination>(string profileName, MemberList memberList = MemberList.Destination)
+		{
+			return _configurator.CreatePartialMap<TSource, TDestination>(profileName, memberList);
+		}
+
+		public IMappingExpression CreatePartialMap(Type sourceType, Type destinationType, MemberList memberList = MemberList.Destination)
+		{
+			return _configurator.CreatePartialMap(sourceType, destinationType, ProfileName, memberList);
+		}
+
+		public IMappingExpression CreatePartialMap(Type sourceType, Type destinationType, string profileName, MemberList memberList = MemberList.Destination)
+		{
+			return _configurator.CreatePartialMap(sourceType, destinationType, profileName, memberList);
+		}
+		
 		public void RecognizeAlias(string original, string alias)
 		{
 			GetProfile().RecognizeAlias(original, alias);

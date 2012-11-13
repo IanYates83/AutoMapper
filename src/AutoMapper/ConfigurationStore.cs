@@ -167,8 +167,7 @@ namespace AutoMapper
 		{
 		    return CreateMap<TSource, TDestination>(DefaultProfileName, memberList);
 		}
-
-
+		
         public IMappingExpression<TSource, TDestination> CreateMap<TSource, TDestination>(string profileName)
         {
             return CreateMap<TSource, TDestination>(profileName, MemberList.Destination);
@@ -198,6 +197,44 @@ namespace AutoMapper
 			return CreateMappingExpression(typeMap, destinationType);
 		}
 
+		public IMappingExpression<TSource, TDestination> CreatePartialMap<TSource, TDestination>(MemberList memberList = MemberList.Destination)
+		{
+			return CreatePartialMap<TSource, TDestination>(DefaultProfileName, memberList);
+		}
+
+		public IMappingExpression<TSource, TDestination> CreatePartialMap<TSource, TDestination>(string profileName, MemberList memberList = MemberList.Destination)
+		{
+			var typeMap = CreateTypeMap(typeof(TSource), typeof(TDestination), profileName, memberList);
+			var exp = CreateMappingExpression<TSource, TDestination>(typeMap);
+
+			var props = typeMap.GetUnmappedPropertyNames();
+			foreach (var prop in props)
+			{
+				exp.ForMember(prop, m => m.Ignore());
+			}
+
+			return exp;
+		}
+
+		public IMappingExpression CreatePartialMap(Type sourceType, Type destinationType, MemberList memberList = MemberList.Destination)
+		{
+			return CreatePartialMap(sourceType, destinationType, DefaultProfileName, memberList);
+		}
+
+		public IMappingExpression CreatePartialMap(Type sourceType, Type destinationType, string profileName, MemberList memberList = MemberList.Destination)
+		{
+			var typeMap = CreateTypeMap(sourceType, destinationType, profileName, memberList);
+			var exp = CreateMappingExpression(typeMap, destinationType);
+
+			var props = typeMap.GetUnmappedPropertyNames();
+			foreach (var prop in props)
+			{
+				exp.ForMember(prop, null);
+			}
+
+			return exp;
+		}
+		
 		public void RecognizePrefixes(params string[] prefixes)
 		{
 			GetProfile(DefaultProfileName).RecognizePrefixes(prefixes);

@@ -151,6 +151,16 @@ namespace AutoMapper
 			return Configuration.CreateMap(sourceType, destinationType);
 		}
 
+		public static IMappingExpression<TSource, TDestination> CreatePartialMap<TSource, TDestination>()
+		{
+			return Configuration.CreatePartialMap<TSource, TDestination>();
+		}
+
+		public static IMappingExpression CreatePartialMap(Type sourceType, Type destinationType)
+		{
+			return Configuration.CreatePartialMap(sourceType, destinationType);
+		}
+
 		public static IProfileExpression CreateProfile(string profileName)
 		{
 			return Configuration.CreateProfile(profileName);
